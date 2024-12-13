@@ -36,10 +36,12 @@ public List<Salle> afficher(){
 public Salle afficherbyid(Long id) {
 	return this.salerepos.findById(id).get();
 }
-public String modif(Long id , String nom) {
-	Salle s = this.salerepos.findById(id).get();
-	s.setNomdesalle(nom);
-	this.salerepos.saveAndFlush(s);
+public String modif(Salle s,String nomdep) {
+	Salle sa = this.salerepos.findById(s.getId()).get();
+	Departement d = this.deprepos.findByNom(nomdep);
+
+	s.setDepartement(d);
+	sa =this.salerepos.saveAndFlush(s);
 	return "true";
 	
 }

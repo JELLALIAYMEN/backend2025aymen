@@ -1,6 +1,7 @@
 package com.DPC.spring.repositories;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -22,5 +23,9 @@ public interface EmploiRepository extends JpaRepository<Emploidetemps, Long> {
 	Emploidetemps findByClasseAndNomjourAndHeure(Classe c, String nomjour, String heure);
 
 	Emploidetemps findBySalleAndNomjourAndHeure(Salle s, String nomjour, String heure);
+
+	List<Emploidetemps> findByUser(Utilisateur u);
+
+	List<Emploidetemps> findByClasse(Classe c);
 
 }

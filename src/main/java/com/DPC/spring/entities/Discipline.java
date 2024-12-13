@@ -19,11 +19,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class Discipline {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;  // Ensure this is Long and not String for JPA
 
-    @Enumerated(EnumType.STRING)
-    private TypeDisc typeDisc;
+    private String typeDisc;
     @ManyToOne
     Utilisateur user ;
+    @ManyToOne
+    Utilisateur eleve ; 
 }

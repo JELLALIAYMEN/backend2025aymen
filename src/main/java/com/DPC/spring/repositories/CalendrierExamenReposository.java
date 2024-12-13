@@ -1,5 +1,7 @@
 package com.DPC.spring.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.DPC.spring.entities.Calendrierexamen;
@@ -14,5 +16,10 @@ public interface CalendrierExamenReposository extends JpaRepository<Calendrierex
 	Calendrierexamen findByUserAndNomjourAndPeriode(Utilisateur p, String nomjour, String periode);
 
 	Calendrierexamen findBySalleAndNomjourAndPeriode(Salle s, String nomjour, String periode);
+
+	List<Calendrierexamen> findByClasse(Classe c);
+
+
+	List<Calendrierexamen> findByUser(Utilisateur u);
 
 }

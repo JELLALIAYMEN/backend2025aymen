@@ -8,5 +8,5 @@ public interface ISalleService {
 String Ajout(Salle s, String nomdep);
 List<Salle> afficher();
 Salle afficherbyid(Long id);
-String modif(Long id , String nom);
+String modif(Salle s,String nomdep);
 }

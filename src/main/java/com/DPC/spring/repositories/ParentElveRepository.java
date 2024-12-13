@@ -11,4 +11,6 @@ public interface ParentElveRepository extends JpaRepository<ParentEleve,Long> {
 
 	List<ParentEleve> findByParent(Utilisateur up);
 
+	ParentEleve findByParentAndEleve(Utilisateur ue, Utilisateur up);
+
 }

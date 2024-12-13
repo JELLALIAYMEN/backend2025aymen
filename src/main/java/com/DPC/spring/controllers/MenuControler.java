@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +22,7 @@ import com.DPC.spring.services.IMenuService;
 
 @RestController
 @RequestMapping("menu")
+@CrossOrigin("*")
 public class MenuControler {
 @Autowired
 IMenuService service  ;
@@ -40,7 +42,11 @@ public List<Menu> searchMenus(@RequestParam @DateTimeFormat(iso = DateTimeFormat
     return this.menurepos.findMenusByDate(date);
 }
 @PutMapping("update")
-public String update(Long id,@RequestBody Menu menu) {
-	return this.service.update(id, menu);
+public String update(@RequestBody Menu menu) {
+	return this.service.update( menu);
+}
+@GetMapping("afficherbyid")
+public Menu afficherbyid(Long id ) {
+	return this.menurepos.findById(id).get(); 
 }
 }

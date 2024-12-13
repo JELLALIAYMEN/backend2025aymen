@@ -21,8 +21,8 @@ public class IMenuServiceImpl implements IMenuService {
 	 public List<Menu> afficher(){
 		 return this.menurepos.findAll();
 	 }
-	 public String update(Long id,Menu menu) {
-		 Menu m =this.menurepos.findById(id).get(); 
+	 public String update(Menu menu) {
+		 Menu m =this.menurepos.findById(menu.getId()).get(); 
 		 m = this.menurepos.saveAndFlush(menu);
 		 return "true" ; 
 	 } 

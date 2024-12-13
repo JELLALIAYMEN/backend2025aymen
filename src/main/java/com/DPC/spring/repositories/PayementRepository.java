@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.DPC.spring.entities.Moyenne;
+import com.DPC.spring.entities.Payement;
 import com.DPC.spring.entities.Utilisateur;
 
-public interface MoyenneRep extends JpaRepository<Moyenne, Long> {
+public interface PayementRepository extends  JpaRepository<Payement,Long> {
 
-	List<Moyenne> findByUser(Utilisateur u);
+	List<Payement> findByUser(Utilisateur u);
 
 }

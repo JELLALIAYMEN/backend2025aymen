@@ -3,6 +3,7 @@ package com.DPC.spring.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import com.DPC.spring.repositories.UtilisateurRepository;
 
 @RestController
 @RequestMapping("reservation")
+@CrossOrigin("*")
 public class ReservationMenuController {
 
 @Autowired
@@ -28,7 +30,7 @@ MenuRepository menurepos ;
 UtilisateurRepository userrepos ;
 
 
-@PostMapping("/creer")
+@PostMapping("creer")
 public String creer(Long idmenu , String email) {
 	Menu m = this.menurepos.findById(idmenu).get();
 	Utilisateur u = this.userrepos.findByEmail(email);

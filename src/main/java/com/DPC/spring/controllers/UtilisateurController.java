@@ -34,7 +34,6 @@ public class UtilisateurController {
      private IUtilisateurService iUtilisateurService;
 
 	
-	@PreAuthorize("hasAuthority('admin')")
 	@DeleteMapping("/delete")
 	@ApiOperation(value = "supprimer Utilisateur ")
 	public void deleteUtilisateur(long idUtilisateur)  {
@@ -49,7 +48,6 @@ public class UtilisateurController {
 		iUtilisateurService.updateUtilisateur(utilisateur);
 	}
 
-	@PreAuthorize("hasAuthority('Admin')")
 	@GetMapping("/GetAllUser")
 	public List<Utilisateur> GetUtilisateur() {
 		return iUtilisateurService.GetUtilisateur();
@@ -95,8 +93,30 @@ public class UtilisateurController {
 		}
 	}
 
+
 	
-	@PreAuthorize("hasAuthority('admin')")
+	@RequestMapping(value = "/adduser", method = RequestMethod.POST)
+	public String adduser(@RequestBody Utilisateur user) {
+		Utilisateur userexist = this.userrepos.findByEmail(user.getEmail());
+		if(userexist==null){
+		Autority auth = this.authrepos.findByName(user.getProfil());
+		String pass = encoder.encode(user.getPassword());
+		user.setAuthorities(auth);
+		user.setPassword(pass);
+		user.setDatecreation(new Date(System.currentTimeMillis()));	
+		user.setArchiver(false);
+	 this.userrepos.save(user);
+		return "true";
+		}
+		else{
+			return  "user exist";
+		}
+	}
+
+
+	
+	
+	
 	@RequestMapping(value = "/admintest", method = RequestMethod.GET)
 	public String testconnectadmin() {
 		return "profil admin";
@@ -148,6 +168,22 @@ public String update(@RequestBody Utilisateur user ) {
 	
 	Utilisateur u =this.userrepos.findById(user.getId()).get();
 
+	user.setDatecreation(u.getDatecreation());
+	user.setAuthorities(u.getAuthorities());
+	user.setArchiver(u.getArchiver());
+	user.setPassword(u.getPassword());
+	u=this.userrepos.save(user);
+	return "true";
+
+}
+
+
+@PostMapping("/updateeleve")
+public String update(@RequestBody Utilisateur user,String nomclasse ) {
+	Classe c = this.classerepos.findByNomclasse(nomclasse);
+
+	Utilisateur u =this.userrepos.findById(user.getId()).get();
+	user.setClasse(c);
 	user.setDatecreation(u.getDatecreation());
 	user.setAuthorities(u.getAuthorities());
 	user.setArchiver(u.getArchiver());

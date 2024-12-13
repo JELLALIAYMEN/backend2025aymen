@@ -72,11 +72,11 @@ public class InoteServiceimpl implements  Inoteservice {
     }
 
     @Override
-    public NoteDTO save(NoteDTO noteDTO) {
+    public NoteDTO save(NoteDTO noteDTO,String emailprof) {
         if (noteDTO == null) {
             throw new IllegalArgumentException("NoteDTO cannot be null");
         }
-
+        Utilisateur u = this.userrespo.findByEmail(emailprof);
         // Convertir NoteDTO en entité Note
         Note note = mapperdto.fromNoteDTO(noteDTO);
 
@@ -96,7 +96,7 @@ public class InoteServiceimpl implements  Inoteservice {
         Utilisateur el = userrespo.findById(noteDTO.getIdel())
                 .orElseThrow(() -> new IllegalArgumentException("Eleve with id " + noteDTO.getIdel() + " not found"));
         note.setUser(el); // Associer Eleve à Note
-
+        note.setProf(u);
         System.out.println(note.getNoteValue()+"////");
         
         // Sauvegarder l'entité Note dans la base de données

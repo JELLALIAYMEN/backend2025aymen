@@ -10,5 +10,9 @@ import com.DPC.spring.entities.Utilisateur;
 
 public interface NoteRepository extends JpaRepository<Note, Long> {
 
+	List<Note> findByUser(Utilisateur u);
+
+	List<Note> findByProf(Utilisateur u);
+
 
 }

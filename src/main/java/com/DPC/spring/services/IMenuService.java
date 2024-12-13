@@ -7,5 +7,5 @@ import com.DPC.spring.entities.Menu;
 public interface IMenuService {
 	public String Creer(Menu m ) ;
 	List<Menu> afficher();
-	String update(Long id,Menu menu);
+	String update(Menu menu);
 }
