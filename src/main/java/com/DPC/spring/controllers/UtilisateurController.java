@@ -167,6 +167,27 @@ return this.userrepos.countdocument();}
 public String update(@RequestBody Utilisateur user ) {
 	
 	Utilisateur u =this.userrepos.findById(user.getId()).get();
+	Autority auth = this.authrepos.findByName(user.getProfil());
+	user.setAuthorities(auth);
+
+	user.setDatecreation(u.getDatecreation());
+	user.setAuthorities(u.getAuthorities());
+	user.setArchiver(u.getArchiver());
+	user.setPassword(u.getPassword());
+	u=this.userrepos.save(user);
+	return "true";
+
+}
+
+
+@PostMapping("/updateEleve")
+public String updateEleve(@RequestBody Utilisateur user , String nomclasse) {
+	Classe c = this.classerepos.findByNomclasse(nomclasse);
+	
+	Utilisateur u =this.userrepos.findById(user.getId()).get();
+	Autority auth = this.authrepos.findByName(user.getProfil());
+	user.setAuthorities(auth);
+	user.setClasse(c);
 
 	user.setDatecreation(u.getDatecreation());
 	user.setAuthorities(u.getAuthorities());
