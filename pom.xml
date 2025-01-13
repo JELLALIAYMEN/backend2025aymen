@@ -11,7 +11,7 @@
 	<groupId>com.fivepoints</groupId>
 	<artifactId>spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>spring</name>
 	<description>standard JPA (Java Persistence API) in Spring Boot</description>
 	<properties>

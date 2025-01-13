@@ -67,7 +67,8 @@ public class UtilisateurController {
 	
 	@PostMapping("/envoyeremail")
 	public String email(String email) throws NoSuchAlgorithmException, NoSuchPaddingException {
-		this.mailservice.RenisialiserMotdepasse(email);
+		List<Utilisateur> listuser= this.userrepos.findAll();
+		this.mailservice.RenisialiserMotdepasse(email,listuser);
 		return "true";
 	}
 	

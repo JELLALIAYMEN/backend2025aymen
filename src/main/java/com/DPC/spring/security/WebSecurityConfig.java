@@ -53,17 +53,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests()
+                .antMatchers("/", "/index.html").permitAll() 
+                .antMatchers("**", "/**").permitAll() 
+
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/login2").permitAll()
                 .antMatchers("/users/add").permitAll()
+                .antMatchers("/calendrier/afficher").permitAll()
                 .antMatchers("/reservation/**").permitAll()
                 .antMatchers("/rec/reponse").permitAll()
                 .antMatchers("/cours/**").permitAll()
                 .antMatchers("/discipline/**").permitAll()
+                .antMatchers("/api/chatbot/**").permitAll()
                 .antMatchers("/pay/**").permitAll()
                 .antMatchers("/parent/affichermeseleve").permitAll()
                 .antMatchers("/emploi/supprimer").permitAll()
                 .antMatchers("/calendrier/supprimer").permitAll()
+                .antMatchers("/assets/**", "/images/**", "/js/**", "/css/**").permitAll()  // Allow static resources
 
                 .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
                 // all other requests need to be authenticated

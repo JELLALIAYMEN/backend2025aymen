@@ -22,6 +22,7 @@ public class Emploidetemps {
     private Date date;
     private String nomjour ;
     private String heure ; 
+    private Boolean parqueinzeine ; 
     
     @ManyToOne
     @JoinColumn(name = "classe_id")

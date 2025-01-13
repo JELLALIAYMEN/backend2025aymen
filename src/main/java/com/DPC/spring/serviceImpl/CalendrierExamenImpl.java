@@ -14,6 +14,7 @@ import com.DPC.spring.entities.Emploidetemps;
 import com.DPC.spring.entities.Matiere;
 import com.DPC.spring.entities.Nondisponible;
 import com.DPC.spring.entities.Salle;
+import com.DPC.spring.entities.Trimestre;
 import com.DPC.spring.entities.Utilisateur;
 import com.DPC.spring.repositories.CalendrierExamenReposository;
 import com.DPC.spring.repositories.ClasseRepository;
@@ -46,7 +47,7 @@ public class CalendrierExamenImpl implements ICalendrierExamenService {
 	MailService mailservice ;
 	
 	
-	public String Creercalendrier(Calendrierexamen calendrier , String email , String salles , String matiere , String classe ,String typecalendrier ) throws NoSuchAlgorithmException, NoSuchPaddingException {
+	public String Creercalendrier(Calendrierexamen calendrier , String email , String salles , String matiere , String classe ,String typecalendrier , Trimestre t ) throws NoSuchAlgorithmException, NoSuchPaddingException {
 		Utilisateur p = this.userepos.findByEmail(email);
 		if(p.getAuthorities().getName().equals("Teacher")) {
 			
@@ -79,6 +80,7 @@ public class CalendrierExamenImpl implements ICalendrierExamenService {
 						calendrier.setClasse(c);
 						calendrier.setMatiere(m);
 						calendrier.setSalle(s);
+						calendrier.setTrimestre(t);
 						calendrier.setUser(p);
 						calendrier.setTypecalendrier("Synthése");
 						this.calendrierrepos.save(calendrier);
@@ -107,6 +109,7 @@ public class CalendrierExamenImpl implements ICalendrierExamenService {
 			calendrier.setMatiere(m);
 			calendrier.setSalle(s);
 			calendrier.setUser(p);
+			calendrier.setTrimestre(t);
 			calendrier.setTypecalendrier("Controle");
 			this.calendrierrepos.save(calendrier);
 			for (int i = 0; i < list.size(); i++) {

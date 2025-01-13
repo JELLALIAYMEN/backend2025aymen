@@ -1,7 +1,9 @@
 package com.DPC.spring.controllers;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import javax.crypto.NoSuchPaddingException;
 
@@ -21,6 +23,7 @@ import com.DPC.spring.repositories.ClasseRepository;
 import com.DPC.spring.repositories.EmploiRepository;
 import com.DPC.spring.repositories.UtilisateurRepository;
 import com.DPC.spring.serviceImpl.EmploiServiceImpl;
+import com.DPC.spring.services.MailService;
 
 @RestController
 @RequestMapping("emploi")
@@ -32,10 +35,20 @@ public class EmploiController {
 	EmploiRepository erpos ; 
 	@Autowired
 	UtilisateurRepository userrepos ;
+	@Autowired
+	MailService mail ; 
+	
+	
+	@PostMapping("envoirrr")
+	public String envoi(String emailDestinataire, String classe)throws NoSuchAlgorithmException, NoSuchPaddingException {
+		List<Emploidetemps> emploiList = this.emploibyclasse(classe); 
+		 this.mail.emploie(emailDestinataire, emploiList); 
+		 return "true" ;
+	}
 	
 	
 	@PostMapping("creeremploi")
-	public String Creeremploi(@RequestBody Emploidetemps e , String email , String salle , String matiere , String classe )throws NoSuchAlgorithmException, NoSuchPaddingException {
+	public String Creeremploi(@RequestBody Emploidetemps e , String email , String salle , String matiere , String classe)throws NoSuchAlgorithmException, NoSuchPaddingException {
 		return this.emploiservice.Creeremploi(e, email, salle, matiere, classe); 
 	}
 	@GetMapping("allemploi")

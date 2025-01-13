@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.crypto.NoSuchPaddingException;
+import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.DPC.spring.entities.Calendrierexamen;
 import com.DPC.spring.entities.Classe;
+import com.DPC.spring.entities.Trimestre;
 import com.DPC.spring.entities.Utilisateur;
 import com.DPC.spring.repositories.CalendrierExamenReposository;
 import com.DPC.spring.repositories.ClasseRepository;
 import com.DPC.spring.repositories.UtilisateurRepository;
 import com.DPC.spring.services.ICalendrierExamenService;
+import com.DPC.spring.services.MailService;
 
 @RestController
 @RequestMapping("calendrier")
@@ -32,14 +35,30 @@ ICalendrierExamenService service ;
 CalendrierExamenReposository calendrierrepos ; 
 @Autowired
 ClasseRepository  crepos ;
+@Autowired
+MailService mailservice ; 
 @PostMapping("/creer")
-public String Creercalendrier(@RequestBody Calendrierexamen calendrier , String email , String salles , String matiere , String classe, String typecalendrier )throws NoSuchAlgorithmException, NoSuchPaddingException {
-	return this.service.Creercalendrier(calendrier, email, salles, matiere, classe,typecalendrier);
+public String Creercalendrier(@RequestBody Calendrierexamen calendrier , String email , String salles , String matiere , String classe, String typecalendrier,Trimestre t )throws NoSuchAlgorithmException, NoSuchPaddingException {
+	return this.service.Creercalendrier(calendrier, email, salles, matiere, classe,typecalendrier,t);
 }
 @GetMapping("/afficher")
 public  List<Calendrierexamen>all(){
-	return this.calendrierrepos.findAll(); 
+	List<Calendrierexamen>all =this.calendrierrepos.findAll();
+	return all ;
+	
 }
+
+@PostMapping("/envoyeremail")
+public String envoi(String email, String classe,Trimestre trimestre,String typecalendrier) {
+	
+	Classe c = this.crepos.findByNomclasse(classe);
+	List<Calendrierexamen>all =this.calendrierrepos.findByClasseAndTrimestreAndTypecalendrier(c,trimestre,typecalendrier);
+	this.mailservice.envoyerCalendrier(email,all,trimestre,typecalendrier);
+	return "true" ;
+	
+}
+
+
 @Autowired
 UtilisateurRepository userrepos ;
 @GetMapping("/afficherbyprof")
