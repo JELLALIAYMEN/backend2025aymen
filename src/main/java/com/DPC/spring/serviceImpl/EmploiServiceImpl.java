@@ -62,11 +62,7 @@ public String Creeremploi(Emploidetemps e , String email , String salles , Strin
 		if(emploiprofclasse!=null) {
 			return "prof a ensiegne pour cette classe aujourd'hui";
 		}
-		else {
-			Emploidetemps emploiclasse = this.emploirepos.findByClasseAndNomjourAndHeure(c,e.getNomjour(),e.getHeure());
-			if(emploiclasse!=null) {
-				return "ce classe n'est pas disponible dans cette heure";
-			}
+			
 			else {
 				Emploidetemps esalle = this.emploirepos.findBySalleAndNomjourAndHeure(s,e.getNomjour(),e.getHeure());
 				if(esalle!=null) {
@@ -91,7 +87,7 @@ public String Creeremploi(Emploidetemps e , String email , String salles , Strin
 			}
 			
 			
-		}
+		
 
 		
 	
