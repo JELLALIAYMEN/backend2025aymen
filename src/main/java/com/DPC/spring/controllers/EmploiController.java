@@ -39,7 +39,7 @@ public class EmploiController {
 	MailService mail ; 
 	
 	
-	@PostMapping("envoirrr")
+	@PostMapping("envoiemail")
 	public String envoi(String emailDestinataire, String classe)throws NoSuchAlgorithmException, NoSuchPaddingException {
 		List<Emploidetemps> emploiList = this.emploibyclasse(classe); 
 		 this.mail.emploie(emailDestinataire, emploiList); 

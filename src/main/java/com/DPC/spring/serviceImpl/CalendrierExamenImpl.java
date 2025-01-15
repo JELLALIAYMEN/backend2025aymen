@@ -82,7 +82,7 @@ public class CalendrierExamenImpl implements ICalendrierExamenService {
 						calendrier.setSalle(s);
 						calendrier.setTrimestre(t);
 						calendrier.setUser(p);
-						calendrier.setTypecalendrier("Synthése");
+						calendrier.setTypecalendrier(typecalendrier);
 						this.calendrierrepos.save(calendrier);
 						
 						for (int i = 0; i < list.size(); i++) {
@@ -110,7 +110,7 @@ public class CalendrierExamenImpl implements ICalendrierExamenService {
 			calendrier.setSalle(s);
 			calendrier.setUser(p);
 			calendrier.setTrimestre(t);
-			calendrier.setTypecalendrier("Controle");
+			calendrier.setTypecalendrier(typecalendrier);
 			this.calendrierrepos.save(calendrier);
 			for (int i = 0; i < list.size(); i++) {
 				

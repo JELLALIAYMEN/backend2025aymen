@@ -181,7 +181,7 @@ public Map<String, Boolean> envoyerCalendrier(String emailDestinataire, List<Cal
         }
 
         contentBuilder.append("</table>")
-                .append("<br>Cordialement,<br>Votre équipe.");
+                .append("<br>Cordialement,<br>Scolarite.");
 
         // Configurer l'email
         mimeMessageHelper.setSubject("Calendrier");
@@ -242,11 +242,10 @@ public Map<String, Boolean> emploie(String emailDestinataire, List<Emploidetemps
                         .collect(Collectors.toList());
 
                 if (emplois.isEmpty()) {
-                    contentBuilder.append("<td></td>"); // Ajouter une cellule vide si aucun emploi
+                    contentBuilder.append("<td></td>");
                 } else {
-                    // Combiner les matières et les salles
                     String contenuCellule = emplois.stream()
-                            .map(e -> e.getMatiere().getNom() + " (" + e.getSalle().getNomdesalle() + ")")
+                            .map(e -> e.getMatiere().getNom() + " (" + e.getSalle().getNomdesalle() + ") <br>"+e.getUser().getNom()+" "+e.getUser().getPrenom() )
                             .collect(Collectors.joining("<hr>"));
                     contentBuilder.append("<td>").append(contenuCellule).append("</td>");
                 }
