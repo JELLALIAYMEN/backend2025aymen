@@ -1,53 +1,79 @@
 package com.DPC.spring.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.DPC.spring.entities.Menu;
 import com.DPC.spring.entities.Reservationmenu;
 import com.DPC.spring.entities.Utilisateur;
 import com.DPC.spring.repositories.MenuRepository;
 import com.DPC.spring.repositories.ReservationMenuRepository;
 import com.DPC.spring.repositories.UtilisateurRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("reservation")
-@CrossOrigin("*")
+@RequestMapping("/reservation")
 public class ReservationMenuController {
 
-@Autowired
-ReservationMenuRepository reservationrepos ; 
-@Autowired
-MenuRepository menurepos ;
-@Autowired
-UtilisateurRepository userrepos ;
+	@Autowired
+	private MenuRepository menurepos;
 
+	@Autowired
+	private UtilisateurRepository userrepos;
 
-@PostMapping("creer")
-public String creer(Long idmenu , String email) {
-	Menu m = this.menurepos.findById(idmenu).get();
-	Utilisateur u = this.userrepos.findByEmail(email);
-	Reservationmenu r = new Reservationmenu();
-	r.setEleve(u);
-	r.setMenu(m);
-	this.reservationrepos.save(r);
-	return "true" ; 
-}
-@GetMapping("/afficher")
-public List<Reservationmenu> all(){
-	return this.reservationrepos.findAll(); 
-}
-@GetMapping("/afficherbyemail")
-public List<Reservationmenu> allbyemail(String email){
-	Utilisateur u = this.userrepos.findByEmail(email);
+	@Autowired
+	private ReservationMenuRepository reservationrepos;
 
-	return this.reservationrepos.findByEleve(u);
+	// Créer une réservation
+	@PostMapping("/creer")
+	public ResponseEntity<String> creer(@RequestParam Long idmenu, @RequestParam String email) {
+		// Vérifier si le menu existe
+		Optional<Menu> menuOptional = this.menurepos.findById(idmenu);
+		if (!menuOptional.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Menu non trouvé");
+		}
+
+		// Vérifier si l'utilisateur existe
+		Utilisateur utilisateurOptional = this.userrepos.findByEmail(email);
+		if (utilisateurOptional==null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur non trouvé");
+		}
+
+		// Créer la réservation
+		Menu m = menuOptional.get();
+		Utilisateur u = utilisateurOptional;
+
+		Reservationmenu reservation = new Reservationmenu();
+		reservation.setEleve(u);
+		reservation.setMenu(m);
+
+		// Sauvegarder la réservation
+		this.reservationrepos.save(reservation);
+
+		// Réponse de succès
+		return ResponseEntity.status(HttpStatus.CREATED).body("Réservation créée avec succès");
+	}
+
+	// Afficher toutes les réservations
+	@GetMapping("/afficher")
+	public ResponseEntity<List<Reservationmenu>> all() {
+		List<Reservationmenu> reservations = this.reservationrepos.findAll();
+		return ResponseEntity.ok(reservations);
+	}
+
+	// Afficher les réservations par email de l'utilisateur
+	@GetMapping("/afficherbyemail")
+	public ResponseEntity<List<Reservationmenu>> allByEmail(@RequestParam String email) {
+		Utilisateur u = this.userrepos.findByEmail(email);
+		if (u==null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
+		List<Reservationmenu> reservations = this.reservationrepos.findByEleve(u);
+		return ResponseEntity.ok(reservations);
+	}
 }
-}
+

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -31,7 +31,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         Utilisateur user = userService.findByEmail(email);
 
-        if (user == null) {
+        if (user==null) {
             throw new UsernameNotFoundException("User with email = " + email + " not found");
         }
 

@@ -9,6 +9,8 @@ import com.DPC.spring.entities.Utilisateur;
 
 public interface ReclamationRepository extends JpaRepository<Reclamation,Long> {
 
-	List<Reclamation> findByUser(Utilisateur u);
+	List<Reclamation> findByUserOrderByDateDesc(Utilisateur u);
+	List<Reclamation> findByDestinataireOrderByDateDesc(Utilisateur u);
+
 
 }

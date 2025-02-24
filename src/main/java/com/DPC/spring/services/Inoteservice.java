@@ -14,7 +14,7 @@ public interface Inoteservice {
 
 
 
-    NoteDTO save(NoteDTO noteDTO,String email);
+    NoteDTO save(NoteDTO noteDTO);
 
     MatiereDTO saveMatiere(MatiereDTO matiereDTO);
 

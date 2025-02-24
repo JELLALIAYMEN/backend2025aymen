@@ -26,15 +26,50 @@ public class Reclamation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;  
+    private Long id;
+    private String sujet;
 
-    @Temporal(TemporalType.DATE) 
+    @Temporal(TemporalType.DATE)
     private Date date;
+    @ManyToOne
+    @JoinColumn(name = "destinataire_id", nullable = false)
+    private Utilisateur destinataire;
 
-    private String sujet;  
-    private String resultat; 
+    private String resultat;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Utilisateur getDestinataire() {
+        return destinataire;
+    }
+
+    public void setDestinataire(Utilisateur destinataire) {
+        this.destinataire = destinataire;
+    }
+
+    public String getSujet() {
+        return sujet;
+    }
+
+    public void setSujet(String sujet) {
+        this.sujet = sujet;
+    }
+
+    public String getResultat() {
+        return resultat;
+    }
+
+    public void setResultat(String resultat) {
+        this.resultat = resultat;
+    }
 
     @ManyToOne
     Utilisateur user ;
-    
+
 }

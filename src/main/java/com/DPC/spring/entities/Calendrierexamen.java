@@ -2,16 +2,7 @@ package com.DPC.spring.entities;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,29 +14,27 @@ import lombok.NoArgsConstructor;
 @Entity
 
 public class Calendrierexamen {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	@Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
 
     private Date date;
     private String nomjour ;
-    private String periode ; 
-    private String typecalendrier ; 
+    private String periode ;
+    private String typecalendrier ;
     @Enumerated(EnumType.STRING)
     private Trimestre trimestre ;
     @ManyToOne
     @JoinColumn(name = "classe_id")
     private Classe classe;
-    
+
     @ManyToOne
     private Salle salle;
     @ManyToOne
-    private Matiere matiere ; 
+    private Matiere matiere ;
     @ManyToOne
     Utilisateur user ;
-    
-    
 
 
 }

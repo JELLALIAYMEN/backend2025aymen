@@ -1,20 +1,13 @@
 package com.DPC.spring.Mapper;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
+import com.DPC.spring.entities.Module; // ✅ Utilise ton entité Module
+
+import com.DPC.spring.DTO.*;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.DPC.spring.DTO.ActualiteDTO;
-import com.DPC.spring.DTO.DisciplineDTO;
-import com.DPC.spring.DTO.EleveDTO;
-import com.DPC.spring.DTO.MatiereDTO;
-import com.DPC.spring.DTO.MoyenneDTO;
-import com.DPC.spring.DTO.NoteDTO;
-import com.DPC.spring.DTO.PayementDTO;
-import com.DPC.spring.DTO.ReclamationDTO;
-import com.DPC.spring.entities.Actualite;
 import com.DPC.spring.entities.Discipline;
 import com.DPC.spring.entities.Matiere;
 import com.DPC.spring.entities.Moyenne;
@@ -24,18 +17,14 @@ import com.DPC.spring.entities.Reclamation;
 import com.DPC.spring.repositories.Matiererep;
 import com.DPC.spring.services.Inoteservice;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 @Component
 public class Mapperdto {
 
-@Autowired
+    @Autowired
     Inoteservice InoteServiceimp;
-@Autowired
+    @Autowired
     Matiererep matiererep;
 
     public DisciplineDTO fromDiscipline(Discipline discipline) {
@@ -79,13 +68,10 @@ public class Mapperdto {
     }
 
 
-   
-
-   
     public Matiere fromMatiereDTO(MatiereDTO matiereDTO) {
 
 
-        Matiere matiere=new Matiere();
+        Matiere matiere = new Matiere();
         BeanUtils.copyProperties(matiereDTO, matiere);
         return matiere;
     }
@@ -121,9 +107,9 @@ public class Mapperdto {
     }
 
 
-    public Moyenne fromMoyenDTO(MoyenneDTO moyenneDTO){
-        Moyenne moyenne=new Moyenne();
-        BeanUtils.copyProperties(moyenneDTO,moyenne);
+    public Moyenne fromMoyenDTO(MoyenneDTO moyenneDTO) {
+        Moyenne moyenne = new Moyenne();
+        BeanUtils.copyProperties(moyenneDTO, moyenne);
         return moyenne;
     }
 
@@ -152,24 +138,20 @@ public class Mapperdto {
             noteDTO.setIdmatiere(note.getMat().getId()); // Assuming getId() returns Matiere ID
         }
 
-    
+
         return noteDTO;
     }
 
 
-
-
-
-
-
-
     public MatiereDTO fromMatiere(Matiere matiere) {
-        if (matiere== null) {
+        if (matiere == null) {
             return null;
         }
 
-  MatiereDTO matiereDTO=new MatiereDTO();
+        MatiereDTO matiereDTO = new MatiereDTO();
         BeanUtils.copyProperties(matiere, matiereDTO);
         return matiereDTO;
     }
+
+
 }

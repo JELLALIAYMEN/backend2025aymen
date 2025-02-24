@@ -40,6 +40,4 @@ public class Note {
 
     @ManyToOne
     Utilisateur user ;
-    @ManyToOne
-    Utilisateur prof ;
 }

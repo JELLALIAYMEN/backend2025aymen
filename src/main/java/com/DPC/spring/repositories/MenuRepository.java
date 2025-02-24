@@ -13,6 +13,8 @@ import com.DPC.spring.entities.Menu;
 
 public interface MenuRepository extends JpaRepository<Menu,Long> {
 
-	@Query("SELECT m FROM Menu m WHERE :currentDate BETWEEN m.datedeb AND m.datefin")
-	List<Menu> findMenusByDate(@Param("currentDate") LocalDate currentDate);
+	List<Menu> findByNomjour(String jour);
+
+	//@Query("SELECT m FROM Menu m WHERE :currentDate BETWEEN m.datedeb AND m.datefin")
+	//List<Menu> findMenusByDate(@Param("currentDate") Date currentDate);
 }

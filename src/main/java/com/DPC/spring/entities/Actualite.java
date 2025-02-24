@@ -1,14 +1,9 @@
 package com.DPC.spring.entities;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,18 +15,22 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-// Ignorer des propriétés lors de la sérialisation
 public class Actualite {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // ID est un Long pour une base de données relationnelle
+    private Long id;
 
-    private String sujet; // Sujet de l'actualité
-
-    @Temporal(TemporalType.DATE)
-    private Date date; // Date de l'actualité
-
-    @ManyToOne
-    Utilisateur user ;
+    private String titre;
+    private String description;
+    private String texte;
+    private String videoUrl;
+    private String fichierUrl;
+    private Date datePublication;
+    private Cible cible;
+    @ManyToMany
+    @JoinTable(
+            name = "actualite_utilisateur",
+            joinColumns = @JoinColumn(name = "actualite_id"),
+            inverseJoinColumns = @JoinColumn(name = "utilisateur_id"))
+    private List<Utilisateur> utilisateursCibles;
 }

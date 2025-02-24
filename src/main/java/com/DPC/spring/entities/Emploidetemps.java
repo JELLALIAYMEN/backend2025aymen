@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 @Entity
@@ -18,11 +19,10 @@ public class Emploidetemps {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
     private String nomjour ;
     private String heure ; 
-    private Boolean parqueinzeine ; 
     
     @ManyToOne
     @JoinColumn(name = "classe_id")

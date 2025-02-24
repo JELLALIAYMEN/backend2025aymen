@@ -19,7 +19,8 @@ public class ParentEleve {
 	    @GeneratedValue(strategy = GenerationType.AUTO)
 	    private Long id; 
 	 	@ManyToOne
-	 	Utilisateur eleve ; 
+	 	Utilisateur eleve ;
+	private String email ;
 	 	@ManyToOne
 	 	Utilisateur parent ; 
 

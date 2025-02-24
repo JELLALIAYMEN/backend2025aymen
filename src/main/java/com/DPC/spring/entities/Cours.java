@@ -26,7 +26,10 @@ public class Cours {
     @ManyToOne
     private Classe classe;
 
-	public Cours(Long id, String nomcour, byte[] picByte, String nom, String type, Utilisateur user, Classe classe) {
+	@ManyToOne
+	private Matiere matiere;
+
+	public Cours(Long id, String nomcour, byte[] picByte, String nom, String type, Utilisateur user, Classe classe, Matiere matiere) {
 		super();
 		this.id = id;
 		this.nomcour = nomcour;
@@ -35,6 +38,7 @@ public class Cours {
 		this.type = type;
 		this.user = user;
 		this.classe = classe;
+		this.matiere= matiere;
 	}
 
 	public Long getId() {
@@ -91,6 +95,14 @@ public class Cours {
 
 	public void setClasse(Classe classe) {
 		this.classe = classe;
+	}
+
+	public Matiere getMatiere() {
+		return matiere;
+	}
+
+	public void setMatiere(Matiere matiere) {
+		this.matiere = matiere;
 	}
 
 	public Cours() {

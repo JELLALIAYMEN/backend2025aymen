@@ -15,4 +15,6 @@ public class LoginResponse {
     private String profil ; 
     @NonNull
     private String email ;
+    @NonNull
+    private String matricule ;
 }

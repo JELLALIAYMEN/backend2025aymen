@@ -1,20 +1,15 @@
 package com.DPC.spring.entities;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 
 @Entity
 @NoArgsConstructor
@@ -30,14 +25,25 @@ public class Utilisateur {
 	private String login ;
 	private String email ;
 	private String profil ;
+	private String matricule ;
 	private String libelle ;
+
 	private Boolean archiver ;
 	@JsonIgnore
 	@Temporal(TemporalType.DATE)
 	private Date datecreation ;
-	@JsonIgnore
+
 	@ManyToOne
-    private Autority authorities;
+	Classe classe ;
 	@ManyToOne
-	Classe classe ; 
+	private  Departement departement;
+	private Double MontantAnnuel;
+
+	@OneToMany(mappedBy="utilisateur")
+	List<Payement> payements;
+ 
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "authority_id", nullable = false) // Évite les valeurs NULL
+	private Autority authority;
 }

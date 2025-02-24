@@ -9,9 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -19,12 +22,18 @@ import lombok.NoArgsConstructor;
 @Data
 public class Discipline {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;  // Ensure this is Long and not String for JPA
+    @Enumerated(EnumType.STRING)
+    private StatusDisc statusDisc;
 
-    private String typeDisc;
+    private String cause;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+    private String videoPath;
     @ManyToOne
-    Utilisateur user ;
+    private Utilisateur eleve ;
     @ManyToOne
-    Utilisateur eleve ; 
+    private Utilisateur enseignant ;
+    private String adminComment;
 }

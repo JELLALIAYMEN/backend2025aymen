@@ -160,9 +160,6 @@ public class MoyenneServiceimpl  implements Moyenneservice {
 
 
 
-
-
-
     @Override
     public Double updateMoyenne(Double moyennevalue, Long idmoy) {
         // 1. Récupérer la moyenne existante depuis la base de données par idmoy

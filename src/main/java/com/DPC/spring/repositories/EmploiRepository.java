@@ -27,5 +27,4 @@ public interface EmploiRepository extends JpaRepository<Emploidetemps, Long> {
 	List<Emploidetemps> findByUser(Utilisateur u);
 
 	List<Emploidetemps> findByClasse(Classe c);
-
 }

@@ -2,6 +2,7 @@ package com.DPC.spring.serviceImpl;
 
 import java.util.List;
 
+import com.DPC.spring.entities.SalleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,32 +17,34 @@ public class ISalleServiceImpl implements ISalleService {
 SalleRepository salerepos ; 
 @Autowired
 DepartementRepository deprepos ;
+	@Override
+	public String Ajout(Salle s, SalleType salleType) {
+		if (s == null || salleType == null) {
+			return "Erreur : La salle ou le type de salle est invalide.";
+		}
 
-public String Ajout(Salle s, String nomdep) {
-	Departement d = this.deprepos.findByNom(nomdep);
-	Salle sexiste = this.salerepos.findByNomdesalle(s.getNomdesalle());
-	if(sexiste==null) {
-		s.setDepartement(d);
-		this.salerepos.save(s);
-		return "true";
+		// Associer le type de salle à l'objet Salle
+		s.setSalleType(salleType);
+
+		// Sauvegarder la salle dans la base de données
+		salerepos.save(s);
+
+		return "Salle ajoutée avec succès sous le type : " + salleType;
 	}
-	else {
-		return "false";
-	}
-	
-}
-public List<Salle> afficher(){
+
+
+
+
+	public List<Salle> afficher(){
 	return this.salerepos.findAll();
 }
 public Salle afficherbyid(Long id) {
 	return this.salerepos.findById(id).get();
 }
-public String modif(Salle s,String nomdep) {
-	Salle sa = this.salerepos.findById(s.getId()).get();
-	Departement d = this.deprepos.findByNom(nomdep);
-
-	s.setDepartement(d);
-	sa =this.salerepos.saveAndFlush(s);
+public String modif(Long id , String nom) {
+	Salle s = this.salerepos.findById(id).get();
+	s.setNomdesalle(nom);
+	this.salerepos.saveAndFlush(s);
 	return "true";
 	
 }

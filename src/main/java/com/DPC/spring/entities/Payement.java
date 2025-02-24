@@ -3,50 +3,69 @@ package com.DPC.spring.entities;
 import java.time.LocalDate;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-	@AllArgsConstructor
-	@NoArgsConstructor
-	@Data
-	@Builder
-	public class Payement {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
+@Setter
+public class Payement {
+
 	@Id
-	
-	    @GeneratedValue(strategy = GenerationType.AUTO)
-	    private Long id; // Correct, this works with MongoDB for String IDs.
-	@ManyToOne
-	Utilisateur user ;
-	@Temporal(TemporalType.DATE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-	private Date date;
-	    private Double amount;
+	@Enumerated(EnumType.STRING)
 
-	    @Enumerated(EnumType.STRING)
-	    private Typepay typepay;
+	private Modepay modepay; // Enumération des modes de paiement
+private  double Montantpay;
 
-	    @Enumerated(EnumType.STRING)
-	    private Statuspay statuspay;
 
-	    @Enumerated(EnumType.STRING)
-	    private Modepay modepay;
 
-	    @Enumerated(EnumType.STRING)
-	    private ModalitePay modalitePay;
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	LocalDate date;
+
+
+
+	@Enumerated(EnumType.STRING)
+
+	private Typepay typepay; // Type de paiement (enum)
+
+	private Double crédit; // Montant restant à payer
+
+	@Enumerated(EnumType.STRING)
+
+	private Statuspay statuspay;
+	// Statut du paiement (enum)
+
+	@Enumerated(EnumType.STRING)
+
+	private ModalitePay modalitePay;
+	@Override
+	public String toString() {
+		return "Payement{" +
+				"id=" + id +
+				", modepay=" + modepay +
+				", date=" + date +
+				", Montantpay=" + Montantpay +
+				", typepay=" + typepay +
+				", crédit=" + crédit +
+				", statuspay=" + statuspay +
+				", modalitePay=" + modalitePay +
+				'}';
 	}
+	@ManyToOne
+	@JoinColumn(name = "utilisateur_id")
+	private Utilisateur utilisateur;
+
+
+	// Modalité de paiement (enum)
+}

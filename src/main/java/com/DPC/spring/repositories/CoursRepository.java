@@ -1,17 +1,17 @@
 package com.DPC.spring.repositories;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.DPC.spring.entities.Classe;
 import com.DPC.spring.entities.Cours;
-import com.DPC.spring.entities.Utilisateur;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface CoursRepository extends JpaRepository<Cours, Long> {
-
-	List<Cours> findByClasse(Classe classe);
-
-	List<Cours> findByUser(Utilisateur u);
+    @Query("SELECT c FROM Cours c WHERE c.user.email = :email")
+    List<Cours> findByUserEmail(@Param("email") String email);
+    @Query("SELECT c FROM Cours c WHERE c.classe.id = :classeId")
+    List<Cours> findCoursByClasse(@Param("classeId") Long classeId);
 
 }

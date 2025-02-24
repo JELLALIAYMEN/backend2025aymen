@@ -3,28 +3,17 @@ package com.DPC.spring.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.DPC.spring.DTO.MatiereDTO;
 import com.DPC.spring.DTO.NoteDTO;
-import com.DPC.spring.entities.Note;
 import com.DPC.spring.entities.Trimestre;
-import com.DPC.spring.entities.Utilisateur;
 import com.DPC.spring.repositories.Matiererep;
-import com.DPC.spring.repositories.NoteRepository;
-import com.DPC.spring.repositories.UtilisateurRepository;
 import com.DPC.spring.services.Inoteservice;
 
-
-@RestController
-@RequestMapping("note")
 @CrossOrigin("*")
+@RestController
+@RequestMapping("/notes")
 public class NoteController {
     @Autowired
     private final Inoteservice inoteserviceimple;
@@ -37,33 +26,10 @@ public class NoteController {
 
 
     @PostMapping("/savenote")
-    public NoteDTO save(@RequestBody NoteDTO noteDTO,String emailprof) {
-        return inoteserviceimple.save(noteDTO,emailprof);
+    public NoteDTO save(@RequestBody NoteDTO noteDTO) {
+        return inoteserviceimple.save(noteDTO);
 
     }
-    @Autowired
-    NoteRepository noterepos ;
-    @Autowired
-    UtilisateurRepository userrepos ;
-@GetMapping("allnote")
-public List<Note>all(){
-	return this.noterepos.findAll();
-}
-@GetMapping("notebyeleve")
-public List<Note>notebyeleve(String emaileleve){
-	Utilisateur u = this.userrepos.findByEmail(emaileleve);
-	return this.noterepos.findByUser(u);
-	
-	
-}
-
-@GetMapping("notebyprof")
-public List<Note>notebyprof(String emailprof){
-	Utilisateur u = this.userrepos.findByEmail(emailprof);
-	return this.noterepos.findByProf(u);
-	
-	
-}
 
 
     @GetMapping("/{elId}/matiere/{idMatiere}/trimestre/{trimestre}")

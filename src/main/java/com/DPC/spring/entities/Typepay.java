@@ -1,7 +1,12 @@
 package com.DPC.spring.entities;
 
 public enum Typepay {
-    Scolaire,
+    excurtion,
     Cantine,
+    panier,
+    club,
+    scolarite,
+    uniforme,
+    inscription,
 
 }

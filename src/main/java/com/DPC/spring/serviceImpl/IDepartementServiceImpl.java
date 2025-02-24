@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import com.DPC.spring.entities.Departement;
 import com.DPC.spring.repositories.DepartementRepository;
 import com.DPC.spring.services.IDepartementService;
+
+import java.util.List;
+
 @Service
 public class IDepartementServiceImpl implements IDepartementService {
 @Autowired
@@ -20,4 +23,9 @@ DepartementRepository deprepos ;
 			return "false" ;
 		}
 		}
+
+	@Override
+	public List<Departement> findAllDepartement() {
+		return  deprepos.findAll();
 	}
+}
