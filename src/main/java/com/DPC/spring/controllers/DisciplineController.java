@@ -29,12 +29,14 @@ public String Ajout(String type , String emailprof,String emaileleve) {
 	Utilisateur up = this.userrepos.findByEmail(emailprof);
 	Discipline d = new Discipline();
 	d.setEleve(ue);
-	d.setUser(up);
-	d.setTypeDisc(type);
+	d.setEleve(up);
+
+	//d.setUser(up);
+	//d.setTypeDisc(type);
 	this.disrepos.save(d);
 	return "true"; 
 }
-@GetMapping("all")
+@GetMapping("alll")
 public List<Discipline>all(){
 	return this.disrepos.findAll();
 }

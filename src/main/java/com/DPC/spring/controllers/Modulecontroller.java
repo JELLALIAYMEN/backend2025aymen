@@ -79,4 +79,8 @@ UtilisateurRepository userrepos ;
         Module updated = Moduleserviceimpl.updateModule(id, updatedModule);
         return ResponseEntity.ok(updated);
     }
+    @GetMapping("all")
+    public List<Module> findAll(){
+        return  Moduleserviceimpl.findAll();
+    }
 }

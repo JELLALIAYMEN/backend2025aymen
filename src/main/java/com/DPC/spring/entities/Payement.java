@@ -63,8 +63,10 @@ private  double Montantpay;
 				'}';
 	}
 	@ManyToOne
-	@JoinColumn(name = "utilisateur_id")
+	@JoinColumn(name = "utilisateur_id")  // Assurez-vous que ce nom de colonne est correct
 	private Utilisateur utilisateur;
+
+
 
 
 	// Modalité de paiement (enum)

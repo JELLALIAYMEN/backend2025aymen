@@ -73,7 +73,9 @@ public class IPaymentServiceImp implements IPayementService {
         } else {
             payement.setDate(LocalDate.now());  // Sinon, utilisez la date actuelle
         }
-        payement.setUtilisateur(U);  // Associer le paiement à l'utilisateur
+        payement.setUtilisateur(U);
+       // payement.setUser(U);
+       // payement.setUtilisateur(U);  // Associer le paiement à l'utilisateur
 
         // Ajouter le paiement à la liste de l'utilisateur
         if (U.getPayements() == null) {

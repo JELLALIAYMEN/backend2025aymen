@@ -19,4 +19,5 @@ public interface Moduleservice {
         Module updateModule(Long id, Module updatedModule);
 
     List<Module> getModulesByMatricule(String matricule);
+    List<Module>    findAll();
 }

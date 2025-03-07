@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sousclasses")
+@RequestMapping("class")
 @CrossOrigin("*") // Permettre les requêtes CORS
 public class SousclassController {
 
@@ -19,12 +19,13 @@ public class SousclassController {
     }
 
     // Endpoint pour ajouter une nouvelle sous-classe
+
+
     @PostMapping("/add")
     public ResponseEntity<Sousclass> addSousclass(@RequestBody Sousclass sousclass) {
         Sousclass newSousclass = sousclassservice.createSousclass(sousclass.getNomssousclasse());
         return ResponseEntity.ok(newSousclass);
     }
-
     // Endpoint pour récupérer toutes les sous-classes
     @GetMapping("/all")
     public ResponseEntity<List<Sousclass>> getAllSousclasses() {

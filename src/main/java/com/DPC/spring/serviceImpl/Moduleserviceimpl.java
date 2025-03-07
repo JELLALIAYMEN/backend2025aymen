@@ -59,6 +59,11 @@ public class Moduleserviceimpl implements Moduleservice {
     }
 
     @Override
+    public List<Module> findAll() {
+        return modulerep.findAll();
+    }
+
+    @Override
     public Module updateModule(Long id, Module updatedModule) {
         // Find the existing module by ID
         Module existingModule =modulerep.findById(id).orElseThrow(() -> new RuntimeException("Module not found"));

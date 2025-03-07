@@ -14,4 +14,7 @@ public interface DisciplineRepository extends JpaRepository<Discipline, Long> {
     List<Discipline> findByEleveAndStatusDiscOrderByDateDesc(Utilisateur eleve, StatusDisc status);
     List<Discipline> findAllByOrderByDateDesc();
 
+    List<Discipline> findByEleve(Utilisateur eleve);
+
+    List<Discipline> findByUser(Utilisateur attr0);
 }

@@ -5,8 +5,11 @@ import com.DPC.spring.services.MailService;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +28,10 @@ import java.util.Optional;
 import javax.crypto.NoSuchPaddingException;
 
 
-@CrossOrigin("*")
+
 @RestController
 @RequestMapping("users")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UtilisateurController {
 
 	@Autowired
@@ -97,7 +101,7 @@ public class UtilisateurController {
 			return  "user exist";
 		}
 	}
-
+/*
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public String AjoutParent(@RequestBody Utilisateur user) {
 		Utilisateur userexist = this.userrepos.findByEmail(user.getEmail());
@@ -115,7 +119,7 @@ public class UtilisateurController {
 			return  "user exist";
 		}
 	}
-
+*/
 	
 	@PreAuthorize("hasAuthority('admin')")
 	@RequestMapping(value = "/admintest", method = RequestMethod.GET)
@@ -206,16 +210,25 @@ public class UtilisateurController {
 			return null;
 		}
 	}
-	@PostMapping("/affecter-departement")
-	public List<Utilisateur> affecterUtilisateurDepartement(@RequestParam Long id, @RequestParam String email) {
-		// Appeler la méthode du service pour affecter l'utilisateur au département
-		return UtilisateurServiceImp.affecterUtilisateurDepartement(id, email);
-	}
+
 	@GetMapping("/eleveByClass")
 	public ResponseEntity<List<Utilisateur>> getElevesByClass(@RequestParam String nomclasse) {
 		List<Utilisateur> eleves = userrepos.findByClasseNomclasse(nomclasse);
 		return ResponseEntity.ok(eleves);
 	}
+	@PostMapping("/addUser")
+	public ResponseEntity<?> addUser(@RequestBody Utilisateur utilisateur) {
+		try {
+			Utilisateur savedUser = UtilisateurServiceImp.add(utilisateur);
+			return ResponseEntity.ok(savedUser);
+		} catch (DataIntegrityViolationException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur d'intégrité des données : " + e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur serveur : " + e.getMessage());
+		}
+	}
+
+
 
 
 }

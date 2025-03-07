@@ -35,5 +35,7 @@ public class Discipline {
     private Utilisateur eleve ;
     @ManyToOne
     private Utilisateur enseignant ;
+    @ManyToOne
+    private  Utilisateur user;
     private String adminComment;
 }

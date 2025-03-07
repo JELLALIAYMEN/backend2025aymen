@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UtilisateurServiceImp implements  IUtilisateurService {
@@ -24,11 +23,11 @@ public class UtilisateurServiceImp implements  IUtilisateurService {
     @Autowired
     private DepartementRepository departementRepository;
 
- /*   @Override
-    public void add(Utilisateur utilisateur) {
 
-        utilisateurRepository.save(utilisateur);
-    } */
+    @Override
+    public Utilisateur add(Utilisateur utilisateur) {
+        return utilisateurRepository.save(utilisateur);
+    }
 
     @Override
     public void deleteUtilisateur(Long idUtilisateur) {
@@ -103,31 +102,7 @@ public class UtilisateurServiceImp implements  IUtilisateurService {
     }
 
 
-    @Override
-    public List<Utilisateur> affecterUtilisateurDepartement(Long id, String email) {
-        // Étape 1 : Récupérer tous les utilisateurs ayant le profil "Teach"
-        List<Utilisateur> utilisateurs = utilisateurRepository.findAllByProfil("Teacher");
 
-        // Étape 2 : Vérifier si des utilisateurs ont ce profil
-        if (utilisateurs.isEmpty()) {
-            throw new RuntimeException("Aucun utilisateur trouvé avec le profil Teach.");
-        }
-
-        // Étape 3 : Récupérer le département correspondant à l'id
-        Departement departement = departementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Département non trouvé pour l'ID : " + id));
-
-        // Étape 4 : Affecter le département aux utilisateurs
-        for (Utilisateur utilisateur : utilisateurs) {
-            // Si l'email correspond à celui passé en paramètre, affecter cet utilisateur au département
-            if (utilisateur.getEmail().equals(email)) {
-                utilisateur.setDepartement(departement);
-                utilisateurRepository.save(utilisateur); // Sauvegarder l'utilisateur avec son nouveau département
-            }
-        }
-
-        return utilisateurs; // Retourner la liste des utilisateurs affectés
-    }
 
     @Override
     public Utilisateur affecterUtilisateurClasse(String email, Long id) {
