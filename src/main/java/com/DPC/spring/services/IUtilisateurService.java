@@ -1,15 +1,18 @@
 package com.DPC.spring.services;
 
 import com.DPC.spring.entities.Utilisateur;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 
 public interface IUtilisateurService {
 
-   // void  add(Utilisateur utilisateur);
+   void  add(Utilisateur utilisateur);
     void  updateUtilisateur (Utilisateur utilisateur);
 
-    Utilisateur add(Utilisateur utilisateur);
+   // Utilisateur add(Utilisateur utilisateur);
+
+
 
     void  deleteUtilisateur(Long idUtilisateur);
     List<Utilisateur> GetUtilisateur();

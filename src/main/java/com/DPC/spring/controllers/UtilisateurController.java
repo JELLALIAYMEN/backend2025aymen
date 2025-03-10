@@ -1,5 +1,6 @@
 package com.DPC.spring.controllers;
 
+import com.DPC.spring.entities.ErrorResponse;
 import com.DPC.spring.services.IUtilisateurService;
 import com.DPC.spring.services.MailService;
 
@@ -28,10 +29,12 @@ import java.util.Optional;
 import javax.crypto.NoSuchPaddingException;
 
 
+//@CrossOrigin(origins = "http://localhost:4200") // Autorise uniquement Angular
 
 @RestController
 @RequestMapping("users")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class UtilisateurController {
 
 	@Autowired
@@ -216,17 +219,63 @@ public class UtilisateurController {
 		List<Utilisateur> eleves = userrepos.findByClasseNomclasse(nomclasse);
 		return ResponseEntity.ok(eleves);
 	}
-	@PostMapping("/addUser")
-	public ResponseEntity<?> addUser(@RequestBody Utilisateur utilisateur) {
-		try {
-			Utilisateur savedUser = UtilisateurServiceImp.add(utilisateur);
-			return ResponseEntity.ok(savedUser);
-		} catch (DataIntegrityViolationException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur d'intégrité des données : " + e.getMessage());
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur serveur : " + e.getMessage());
+
+
+
+
+/*
+	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
+	public String Ajoutuser(@RequestBody Utilisateur user) {
+		// Vérifier si l'email existe déjà
+		Utilisateur userexist = this.userrepos.findByEmail(user.getEmail());
+		if (userexist != null) {
+			return "user exist";
 		}
+
+		// Vérifier si le profil existe
+		Autority auth = this.authrepos.findByName(user.getProfil());
+		if (auth == null) {
+			return "Profil introuvable";
+		}
+
+		// Encoder le mot de passe
+		String pass = encoder.encode(user.getPassword());
+		user.setAuthority(auth);
+		user.setPassword(pass);
+		user.setDatecreation(new Date(System.currentTimeMillis()));
+		user.setArchiver(false);
+
+		// Sauvegarder l'utilisateur
+		this.userrepos.save(user);
+		return "true";
 	}
+*/
+@RequestMapping(value = "/addUser", method = RequestMethod.POST)
+public ResponseEntity<?> Ajoutuser(@RequestBody Utilisateur user) {
+	// Vérifier si l'email existe déjà
+	Utilisateur userexist = this.userrepos.findByEmail(user.getEmail());
+	if (userexist != null) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("User already exists"));
+	}
+
+	// Vérifier si le profil existe
+	Autority auth = this.authrepos.findByName(user.getProfil());
+	if (auth == null) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("Profil introuvable"));
+	}
+
+	// Encoder le mot de passe
+	String pass = encoder.encode(user.getPassword());
+	user.setAuthority(auth);
+	user.setPassword(pass);
+	user.setDatecreation(new Date(System.currentTimeMillis()));
+	user.setArchiver(false);
+
+	// Sauvegarder l'utilisateur
+	this.userrepos.save(user);
+	return ResponseEntity.ok("Utilisateur ajouté avec succès");
+}
+
 
 
 

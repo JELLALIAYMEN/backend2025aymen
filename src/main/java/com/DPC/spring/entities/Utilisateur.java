@@ -20,7 +20,7 @@ public class Utilisateur {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
-	 // ✅ Obligatoire
+
 	private String nom;
 
  // ✅ Obligatoire
@@ -58,7 +58,7 @@ public class Utilisateur {
 	private List<Payement> payements;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "authority_id") // ✅ Évite les valeurs NULL
+	// ✅ Évite les valeurs NULL
 	private Autority authority;
 
 	public Double getMontantAnnuel() {

@@ -1,33 +1,34 @@
 package com.DPC.spring.services;
 
 
+import com.DPC.spring.entities.Autority;
 import com.DPC.spring.entities.Classe;
-import com.DPC.spring.entities.Departement;
 import com.DPC.spring.entities.Utilisateur;
+import com.DPC.spring.repositories.AuthorityRepository;
 import com.DPC.spring.repositories.ClasseRepository;
-import com.DPC.spring.repositories.DepartementRepository;
 import com.DPC.spring.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UtilisateurServiceImp implements  IUtilisateurService {
+public  class UtilisateurServiceImp implements  IUtilisateurService {
 
     @Autowired
     ClasseRepository classeRepository;
     @Autowired
     private UtilisateurRepository utilisateurRepository;
     @Autowired
-    private DepartementRepository departementRepository;
+    AuthorityRepository authorityRepository;
 
 
-    @Override
-    public Utilisateur add(Utilisateur utilisateur) {
-        return utilisateurRepository.save(utilisateur);
-    }
+
+
 
     @Override
     public void deleteUtilisateur(Long idUtilisateur) {
@@ -91,10 +92,18 @@ public class UtilisateurServiceImp implements  IUtilisateurService {
 
 
     @Override
+    public void add(Utilisateur utilisateur) {
+
+    }
+
+    @Override
     public void updateUtilisateur(Utilisateur utilisateur) {
         // TODO Auto-generated method stub
 
     }
+
+
+
 
     @Override
     public List<Utilisateur> findAllByProfil(String profil) {
@@ -102,12 +111,10 @@ public class UtilisateurServiceImp implements  IUtilisateurService {
     }
 
 
-
-
     @Override
     public Utilisateur affecterUtilisateurClasse(String email, Long id) {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(email);
-        if (utilisateur!=null) {
+        if (utilisateur != null) {
             Classe classe = classeRepository.findById(id).orElse(null);
             if (classe != null) {
                 utilisateur.setClasse(classe);
@@ -136,6 +143,5 @@ public class UtilisateurServiceImp implements  IUtilisateurService {
     public List<Utilisateur> findByClasseNomclasse(String nomclasse) {
         return utilisateurRepository.findByClasseNomclasse(nomclasse);
     }
-
 
 }
